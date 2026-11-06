@@ -1,0 +1,24 @@
+# Text Typer
+
+A small Windows desktop app: paste text, press **Type It**, and it types the text into whichever window has focus, one keystroke at a time. Plain formatting is kept exactly: spaces, tabs, line breaks and blank lines.
+
+## Features
+- GUI (customtkinter) with light/dark themes, Paste/Clear buttons and a character/line count
+- Adjustable start delay (0–10 s) and typing speed (0–100 ms per character)
+- Unicode support: accents, symbols, other alphabets, emoji
+- **Compatibility mode:** types capitals and shifted symbols as real Shift+key presses, for games, remote desktop and VMs that ignore Unicode input
+- Strips invisible control characters before typing
+- **Esc** stops typing at any time; "Always on top" switch
+
+## Run from source
+```
+py -m pip install -r requirements.txt
+py text_typer.py
+```
+
+## Build the exe
+Double-click `build.bat`. The output is `dist\TextTyper.exe`.
+
+## Notes
+- To type into a program running as administrator, run Text Typer as administrator too.
+- Auto-indenting editors (VS Code etc.) may double up indentation.
