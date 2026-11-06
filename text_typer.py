@@ -4,6 +4,7 @@ Keeps plain formatting: spaces, tabs, line breaks, blank lines.
 """
 
 import ctypes
+import os
 import queue
 import sys
 import threading
@@ -28,6 +29,12 @@ VK_CAPITAL = 0x14
 _MOD_KEYS = ((1, keyboard.Key.shift), (2, keyboard.Key.ctrl), (4, keyboard.Key.alt))
 
 
+def resource_path(name: str) -> str:
+    """Path to a bundled file, both from source and inside the PyInstaller exe."""
+    base = getattr(sys, "_MEIPASS", os.path.dirname(os.path.abspath(__file__)))
+    return os.path.join(base, name)
+
+
 def strip_control_chars(text: str) -> tuple[str, int]:
     """Remove invisible control characters (keeps newline and tab). Returns (text, removed_count)."""
     kept = [ch for ch in text if ch in "\n\t" or unicodedata.category(ch) != "Cc"]
@@ -38,6 +45,9 @@ class TextTyperApp(ctk.CTk):
     def __init__(self):
         super().__init__()
         self.title(APP_NAME)
+        icon = resource_path("icon.ico")
+        if IS_WINDOWS and os.path.exists(icon):
+            self.iconbitmap(icon)  # also stops customtkinter replacing it with its default icon
         self.geometry("660x600")
         self.minsize(560, 500)
 
